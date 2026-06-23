@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: authsphere-postgres
+    environment:
+      POSTGRES_DB: authsphere
+      POSTGRES_USER: authsphere
+      POSTGRES_PASSWORD: authsphere123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: authsphere-redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
