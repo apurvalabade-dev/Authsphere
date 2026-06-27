@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -25,12 +26,25 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<Map<String, Object>> me(@AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
+
+        List<String> roles = user.getRoles().stream()
+            .map(r -> r.getName())
+            .collect(Collectors.toList());
+
+        List<String> permissions = user.getRoles().stream()
+            .flatMap(r -> r.getPermissions().stream())
+            .map(p -> p.getName())
+            .distinct()
+            .collect(Collectors.toList());
+
         return ResponseEntity.ok(Map.of(
             "id", user.getId(),
             "email", user.getEmail(),
             "firstName", user.getFirstName(),
             "lastName", user.getLastName(),
-            "status", user.getStatus()
+            "status", user.getStatus(),
+            "roles", roles,
+            "permissions", permissions
         ));
     }
 
