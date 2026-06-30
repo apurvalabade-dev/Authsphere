@@ -217,3 +217,4 @@ Client (React / Mobile / Any Service)
                                                                           | `ALL_OTHER_SESSIONS_REVOKED` | Revoke all other sessions |
 
                                                                           ---
+                                                                          ---
