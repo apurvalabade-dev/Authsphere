@@ -3,15 +3,16 @@ spring:
     name: authsphere
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/authsphere
-    username: authsphere
-    password: authsphere123
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/authsphere}
+    username: ${SPRING_DATASOURCE_USERNAME:authsphere}
+    password: ${SPRING_DATASOURCE_PASSWORD:authsphere123}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: validate
     show-sql: false
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
@@ -23,15 +24,15 @@ spring:
 
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
       timeout: 2000ms
 
   mail:
-    host: sandbox.smtp.mailtrap.io
-    port: 2525
-    username: f9baa17343474c
-    password: 38df4c990a8a9e
+    host: ${SPRING_MAIL_HOST:sandbox.smtp.mailtrap.io}
+    port: ${SPRING_MAIL_PORT:2525}
+    username: ${MAIL_USERNAME:f9baa17343474c}
+    password: ${MAIL_PASSWORD:38df4c990a8a9e}
     properties:
       mail:
         smtp:
@@ -40,12 +41,15 @@ spring:
             enable: true
 
 jwt:
-  secret: "ThisIsAVeryLongSecretKeyForJWTSigningThatMustBeAtLeast256BitsLongEnoughForHS256Algorithm!!@@##$$"
+  secret: ${JWT_SECRET:ThisIsAVeryLongSecretKeyForJWTSigningThatMustBeAtLeast256BitsLongEnoughForHS256Algorithm!!@@##$$}
   access-token-expiry: 900000
   refresh-token-expiry: 2592000000
 
+app:
+  base-url: ${APP_BASE_URL:http://localhost:8080}
+
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 springdoc:
   api-docs:
